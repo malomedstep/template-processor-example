@@ -1,0 +1,13 @@
+<!-- смотри contacts.vash -->
+
+@html.extend('shared/layout', function(model) {
+    @html.block('body', function(model) {
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <p class="content-text">Hello from Home page</p>   
+                </div>
+            </div>
+        </div>
+    })
+})

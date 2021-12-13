@@ -1,0 +1,64 @@
+<!-- 
+  Это наш главный шаблон, в котором мы определяем структуру для всех страниц
+  По сути, это обычный html, но тут мы можем использовать специальные конструкции vash,
+  которые позволяют нам гибко компоновать страницы, хедеры, футеры и т.д.
+
+  Вместо того, чтобы всё писать в одной странице, мы описываем хедер и футер в отдельных файлах и "включаем" их сюда
+
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 
+      вот это тоже полезная штука 
+      vash позволяет передавать переменные в html, и, когда он будет рендерить страницу, вместо @model.title будет вставлено переданное значение
+      например, если мы пишем res.render('index', { title: 'SALAM' }), ниже будет 
+      <title>Vash Example - SALAM </title>
+      переменные могут быть любые, с любым именем, любого типа, с любым значением
+      подробнее в routes/index.js
+    -->
+    <title>Vash Example - @model.title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+   
+    @html.block('styles')
+
+  </head>  
+  <body>
+
+    <!-- 
+      когда vash будет обрабатывать этот файл, вместо @html.include('shared/header')
+      будет вставлено содержимое shared/header.vash
+    -->
+    @html.include('shared/header')
+
+    <!-- 
+      а вот эта штука работает как placeholder. Так как это "общий шаблон", в нём не может быть описана конкретная вёрстка
+      конкретной страницы. Вместо этого, мы указываем что вот ТУТ будет находиться тело на конкретной странице
+      То есть, когда vash будет генерировать конечную страницу, вместо @html.block('body') он вставить тело конкретной страницы
+
+      аналогичным образом работает 
+      @html.block('styles') выше 
+      и 
+      @html.block('scripts') ниже 
+    -->
+    @html.block('body')
+
+    <!-- 
+      когда vash будет обрабатывать этот файл, вместо @html.include('shared/header')
+      будет вставлено содержимое shared/footer.vash
+    -->
+    @html.include('shared/footer')
+
+    <!-- 
+      чтобы vash не испортил url, пришлось добавить еще один символ @ - bootstrap@5.0.2 стал bootstrap@@5.0.2 
+      для vash @ это спецсимвол, как, скажем, \ или кавычки в строках в джаваскрипте
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  
+    @html.block('scripts')
+  </body>
+</html>
